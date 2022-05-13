@@ -1,6 +1,7 @@
 :root{
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     background-color: #eee;
+    box-sizing: border-box;
 }
 
 .container{
@@ -43,12 +44,16 @@
     margin-right: 10px ;
     font-size: 16px;
     color: gray;
-    padding-top: 5px;
+    padding-top: 10px;
 }
 .selection div  select{
     flex-grow: 1;
     display: inline-block;
-    padding: 5px;
+    padding: 10px;
+    background-color: #8dd0fa;
+    border: none;
+    color: #515151;
+    border-radius: 5px;
 }
 
 .graph {
@@ -60,6 +65,7 @@
     background-color: white;
     margin : 30px;
     min-width: 1025px;
+    justify-content: space-between;
 }
 
 .graph .chart{
@@ -68,6 +74,13 @@
 }
 .graph .chart div{
     margin: 30px;
+}
+
+.graph .graphHeader{
+  position: relative;
+  top: 0px;
+  left: 100px;
+
 }
 .graph .slide{
     width: 30%;
@@ -100,8 +113,6 @@
     display: flex;
     margin-bottom: 30px;
 
-
-    
 }
 .graph .slide .total.input .input{
     width: fit-content;
@@ -111,10 +122,24 @@
 
 }
 
-input[type="checkbox"] {
-    border-color : #696;
-    outline      : none;
-  }
+
+  input[type="checkbox"]{
+    width: 1.3em;
+    height: 1.3em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: gray;
+}
+
 
 
   .switch {
@@ -168,7 +193,6 @@ input[type="checkbox"] {
     transform: translateX(26px);
   }
   
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
   }
@@ -190,4 +214,9 @@ input[type="checkbox"] {
 
 .data-container div{
     margin-bottom: 10px;
-  }
+}
+
+.pageSize{
+  width: 1260px;
+  margin: auto;
+}

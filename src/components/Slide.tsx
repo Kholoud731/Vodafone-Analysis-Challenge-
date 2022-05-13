@@ -4,6 +4,16 @@ import {  DataType} from "../actions/actionTypes";
 import { filterSchools, removeSchool } from '../actions/index';
 
 
+const colorArray = ['#FF6633', '#00B3E6', 
+'#E6B333', '#3366E6', '#B34D4D',
+'#80B300', '#E6B3B3', '#6680B3', 
+'#FF99E6', '#CCFF1A', '#E6331A', 
+'#66994D', '#B366CC', '#4D8000', '#CC80CC', 
+'#66664D', '#991AFF', '#E666FF', '#4DB3FF',
+'#E666B3', '#33991A', '#B3B31A', '#00E680', 
+'#4D8066', '#809980', '#E6FF80', '#1AFF33',  
+'#CCCC00', '#66E64D', '#4D80CC',
+ '#4DB380','#99E6E6', '#6666FF'];
 
 interface Props {}
 interface LinkStateProps{
@@ -12,15 +22,16 @@ interface LinkStateProps{
     camp: string
     school: string
     filteredSchools: string[]
+    color: string[]
 }
 interface LinkDispatchProps{
-    filterSchools : (data: string)=> void
-    removeSchool: (data: string) => void
+    filterSchools : (data: string, color:string)=> void
+    removeSchool: (data: string, color:string) => void
 }
 
 type LinkProps = Props & LinkStateProps & LinkDispatchProps
 
-const Slide = ({data, country, camp, school, filteredSchools,filterSchools , removeSchool}:LinkProps)=>{
+const Slide = ({data, country, camp, school, color, filteredSchools,filterSchools , removeSchool}:LinkProps)=>{
 
     const filteredData = data.filter((elm)=> {
         if(school === "Show all"){
@@ -54,10 +65,15 @@ const Slide = ({data, country, camp, school, filteredSchools,filterSchools , rem
 
     const onChangeHandler = (e:  React.ChangeEvent<HTMLInputElement>)=>{
         if(e.target.classList[0] === 'active'){
-            removeSchool(e.target.value)
+            const color = e.target.getAttribute('color')
+            removeSchool(e.target.value, color? color : '')
             e.target.checked = false
+            e.target.style.backgroundColor= 'white'
+            e.target.className = 'active'
         }else{
-            filterSchools(e.target.value)
+            filterSchools(e.target.value, colorArray[filteredSchools.length])
+            e.target.setAttribute('color',colorArray[filteredSchools.length])
+            e.target.style.backgroundColor=colorArray[filteredSchools.length]
         }
         e.target.classList.toggle('active')
         
@@ -71,7 +87,7 @@ const Slide = ({data, country, camp, school, filteredSchools,filterSchools , rem
             </div>
 
             <div className='sections'>
-                {dataforEchSchool.map(elm =>{
+                {dataforEchSchool.map((elm, index) =>{
                     return <div className='total input' key={elm[0].id}>
                          <div className='input'>
                          <input 
@@ -79,11 +95,16 @@ const Slide = ({data, country, camp, school, filteredSchools,filterSchools , rem
                          type="checkbox" 
                          value={elm[0].school} 
                          name="school"
+                         style={{
+                            backgroundColor: color[index] ? color[index] : 'white'
+                         }}
                          checked={filteredSchools.indexOf(elm[0].school) > -1 }
                          onChange={(e)=>onChangeHandler(e)}
                          />
                          </div>
-                         <div>
+                         <div style={{
+                            color: color[index] ? color[index] : 'gray'
+                         }}>
                          <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
                          </div>
                          </div>
@@ -101,6 +122,7 @@ const mapStateToProps = (state: AppState): LinkStateProps =>{
         country: state.data.country,
         camp: state.data.camp,
         school: state.data.school,
-        filteredSchools: state.data.selectedSchool
+        filteredSchools: state.data.selectedSchool,
+        color: state.data.lineColor
 }}
 export default connect(mapStateToProps,{ filterSchools, removeSchool })(Slide)

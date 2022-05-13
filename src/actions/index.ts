@@ -24,7 +24,8 @@ export const requestData = (): ActionTypes =>{
         camp: '',
         country: '',
         school: '',
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -37,7 +38,8 @@ export const receiveData = (data: DataType[]): ActionTypes =>{
         camp: data[0].camp,
         country: data[0].country,
         school: data[0].school,
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -50,7 +52,8 @@ export const invalidData = (): ActionTypes =>{
         camp: '',
         country: '',
         school: '',
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -67,7 +70,8 @@ export const changeCountry = (country : string): ActionTypes=>{
         camp: '',
         country:country,
         school: '',
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -80,7 +84,8 @@ export const changeCamp = (camp : string): ActionTypes=>{
         camp: camp,
         country: '',
         school: '',
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -94,7 +99,8 @@ export const changeSchool = (school : string): ActionTypes=>{
         camp: '',
         country: '',
         school: school,
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 
@@ -115,7 +121,7 @@ export const apiRequest = ()=>{
     }
 }
 
-export const filterSchools = (school: string):ActionTypes =>{
+export const filterSchools = (school: string, color: string):ActionTypes =>{
     return {
         type: FILTER_SCHOOLS,
         loading: false,
@@ -124,11 +130,12 @@ export const filterSchools = (school: string):ActionTypes =>{
         camp: '',
         country: '',
         school: school,
-        selectedSchool: school
+        selectedSchool: school,
+        lineColor: color
     }
 }
 
-export const removeSchool = (school: string):ActionTypes => {
+export const removeSchool = (school: string, color: string):ActionTypes => {
     return {
         type: REMOVE_SCHOOL,
         loading: false,
@@ -137,7 +144,8 @@ export const removeSchool = (school: string):ActionTypes => {
         camp: '',
         country: '',
         school: school,
-        selectedSchool: school
+        selectedSchool: school,
+        lineColor: color
     }
 }
 
@@ -150,7 +158,8 @@ export const resetSchools = ():ActionTypes =>{
         camp: '',
         country: '',
         school: '',
-        selectedSchool: ''
+        selectedSchool: '',
+        lineColor: ''
     }
 }
 

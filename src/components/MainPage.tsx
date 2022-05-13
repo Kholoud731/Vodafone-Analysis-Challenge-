@@ -15,7 +15,6 @@ interface LinkStateProps{
     country : string
     camp: string
     school: string
-    filteredSchools: string[]
 }
 interface LinkDispatchProps{
     changeCountry: (country: string)=>void
@@ -28,7 +27,7 @@ type LinkProps = Props & LinkStateProps & LinkDispatchProps
 
 
 
-const MainPage = ({data,country,camp, school, filteredSchools, changeSchool, changeCamp, changeCountry, resetSchools}: LinkProps)=>{
+const MainPage = ({data,country,camp, school, changeSchool, changeCamp, changeCountry, resetSchools}: LinkProps)=>{
 
 
 
@@ -75,7 +74,7 @@ const MainPage = ({data,country,camp, school, filteredSchools, changeSchool, cha
     
 
 return(
-    <div>
+    <div className='pageSize'>
     <div className='container'>
         <Header/>
         <ThemeSwitch/>
@@ -120,8 +119,7 @@ const mapStateToProps = (state: AppState): LinkStateProps =>{
         data: state.data.data,
         country: state.data.country,
         camp: state.data.camp,
-        school: state.data.school,
-        filteredSchools: state.data.selectedSchool
+        school: state.data.school
 }}
 
 export default connect(mapStateToProps,{changeCountry, changeCamp, changeSchool, resetSchools})(MainPage)

@@ -25,6 +25,7 @@ interface DataAsync {
 	country: string
 	school: string
     selectedSchool: string
+    lineColor: string
 
 }
 

@@ -28,7 +28,7 @@ const Home = ({data, apiRequest}: LinkProps)=> {
       apiRequest()
     }
     return (()=>{})
-    
+   // eslint-disable-next-line 
   },[apiRequest])
 
   return (

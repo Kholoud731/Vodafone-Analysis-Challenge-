@@ -13,6 +13,7 @@ interface StateType {
 	country: string
 	school: string
     selectedSchool: string[]
+    lineColor: string[]
 }
 
 const initialState = {
@@ -22,7 +23,8 @@ const initialState = {
     camp: '',
     country: '',
     school: '',
-    selectedSchool: ['']
+    selectedSchool: [''],
+    lineColor:['']
 }
 
 const dataReducer = (state:StateType = initialState, action:ActionTypes): StateType =>{
@@ -36,7 +38,8 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
                 camp: '',
                 country: '',
                 school: '',
-                selectedSchool: ['']
+                selectedSchool: [''],
+                lineColor:['']
             }
         case FETCH_DATA_SUCCESS:
             return {
@@ -46,7 +49,8 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
                 camp: action.data[0].camp,
                 country: action.data[0].country,
                 school: "Show all",
-                selectedSchool: ['']
+                selectedSchool: [''],
+                lineColor:['']
             }
         case FETCH_DATA_FALIURE:
             return {
@@ -56,7 +60,8 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
                 camp: '',
                 country: '',
                 school: '',
-                selectedSchool: ['']
+                selectedSchool: [''],
+                lineColor:['']
             }
         case SELECT_COUNTRY:
             return {...state, country: action.country}
@@ -70,17 +75,19 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
         case FILTER_SCHOOLS:
             
             if(state.selectedSchool[0] === ""){
-                return {...state, selectedSchool: [action.selectedSchool]}
+                return {...state, selectedSchool: [action.selectedSchool], lineColor: [action.lineColor]}
             }else if (state.selectedSchool.indexOf(action.selectedSchool) > -1){
                         return state
             }else{
-                return {...state, selectedSchool: [...state.selectedSchool, action.selectedSchool]}
+                return {...state, selectedSchool: [...state.selectedSchool, action.selectedSchool], lineColor: [...state.lineColor, action.lineColor]}
             } 
             case REMOVE_SCHOOL: 
-                return {...state, selectedSchool: state.selectedSchool.filter((elm)=> elm !== action.selectedSchool)}
+                return {...state, 
+                    selectedSchool: state.selectedSchool.filter((elm)=> elm !== action.selectedSchool),
+                     lineColor: state.lineColor.filter((elm)=> elm !== action.lineColor)}
             
             case RESET_SCHOOLS:
-                return {...state, selectedSchool: [""]}
+                return {...state, selectedSchool: [""], lineColor:['']}
         default:
             return state
     }

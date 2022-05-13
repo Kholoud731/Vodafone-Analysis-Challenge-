@@ -19,6 +19,7 @@ interface LinkStateProps{
     camp: string
     school: string
     filteredSchools: string[]
+    color: string[]
 }
 interface LinkDispatchProps{
 }
@@ -26,7 +27,9 @@ interface LinkDispatchProps{
 type LinkProps = Props & LinkStateProps & LinkDispatchProps
 
 
-const Chart = ({fetchedData, filteredSchools, country, camp, school}: LinkProps)=> {
+
+
+const Chart = ({fetchedData, filteredSchools, country, camp, color}: LinkProps)=> {
 
   const [month, setMonth] = useState('')
   const linkRef  = useRef<HTMLAnchorElement>(null)
@@ -90,24 +93,35 @@ useEffect(() => {
 
   return (
 
-    <>
+    <>    
     <LineChart
       width={750}
       height={500}
       data={data}
       margin={{
-        top: 5,
-        right: 30,
-        left: 20,
+        top: 40,
+        right: 0,
+        left: 60,
         bottom: 5
       }}
       onClick={demoOnClick}
     >
-      <CartesianGrid strokeDasharray="3 3" fill='white'  />
-      <XAxis dataKey="month" />
-      <YAxis />
-      <Tooltip   />
-      {filteredSchools.map((school)=>{return <Line type="linear"  key={school} dataKey={school} stroke="#82ca9d" />})} 
+      <CartesianGrid vertical={false}  fill='white'  />
+      <XAxis dataKey="month" stroke= 'gray'/>
+      <YAxis type='number' width={1} 
+        label={{
+          value: 'No of lessons',
+          position: {x: 90, y: -30},
+          className: 'chart__label',
+          stroke: '#eee'
+        }}
+        stroke= 'gray'
+        axisLine={{ stroke: '#EAF0F4' }}
+      tickSize={0} >
+        
+      </YAxis>
+      <Tooltip viewBox={{ x: 0, y: 0, width: 200, height: 200 }}  />
+      {filteredSchools.map((school, index)=>{return <Line type="linear"  key={school} dataKey={school} stroke={color[index]} strokeWidth={2} dot={{ r: 5 }}  activeDot={{ r: 5 }} />})} 
 
       
     </LineChart>
@@ -127,7 +141,8 @@ const mapStateToProps = (state: AppState): LinkStateProps =>{
       country: state.data.country,
       camp: state.data.camp,
       school: state.data.school,
-      filteredSchools: state.data.selectedSchool
+      filteredSchools: state.data.selectedSchool,
+      color: state.data.lineColor
 }}
 
 export default connect(mapStateToProps,{}) (Chart)
