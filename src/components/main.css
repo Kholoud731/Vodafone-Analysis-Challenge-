@@ -1,0 +1,191 @@
+:root{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    background-color: #eee;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header{
+    margin-top: 30px;
+    color:#956eb1;
+    padding-left: 30px;
+    padding-bottom: 30px;
+
+}
+
+.main{
+    font-weight:400;
+    font-size: 40px;
+    margin-bottom: 50px;
+   
+}
+.second{
+    font-weight: 400;
+    font-size: 20px;
+
+}
+
+.selection{
+    display: flex;
+    justify-content:space-between;
+    padding: 30px;
+    margin: 0;
+}
+.selection div{
+    width: 30%;
+    display: flex;
+}
+
+.selection div  label{
+    margin-right: 10px ;
+    font-size: 16px;
+    color: gray;
+    padding-top: 5px;
+}
+.selection div  select{
+    flex-grow: 1;
+    display: inline-block;
+    padding: 5px;
+}
+
+.graph {
+    display: flex;
+    color: gray;
+    padding: 30px;
+    padding-left: 0;
+    max-height: 500px;
+    background-color: white;
+    margin : 30px;
+}
+
+.graph .chart{
+    width: 70%;
+    background-color: white;
+}
+.graph .chart div{
+    margin: 30px;
+}
+.graph .slide{
+    width: 30%;
+    background-color: white;
+    border-left: 1px solid gray;
+    padding: 30px;
+    overflow: scroll;
+    
+}
+
+.graph .slide .total span {
+    font-size: 25px;
+}
+.graph .slide .total {
+    font-size: 20px;
+    
+}
+.graph .slide .total.heading {
+    width: fit-content;
+    margin-bottom: 30px;
+}
+.graph .slide .total div {
+    font-size: 13px;
+    
+    
+}
+
+.graph .slide .total.input {
+    display: flex;
+    margin-bottom: 30px;
+
+
+    
+}
+.graph .slide .total.input .input{
+    width: fit-content;
+    height: fit-content;
+    margin-right: 10px;
+    align-self: center;
+
+}
+
+input[type="checkbox"] {
+    border-color : #696;
+    outline      : none;
+  }
+
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #48494a;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #48494a;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  .dark{
+      display: inline-block;
+     padding: 10px; 
+    position: relative;
+    top: 8px;
+  }
+
+  .data-container{
+    margin: 30px;
+    padding: 10px;
+  }
+
+.data-container div{
+    margin-bottom: 10px;
+  }

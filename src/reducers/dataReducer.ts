@@ -1,0 +1,90 @@
+import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FALIURE } from "../actions/actionTypes";
+import { ActionTypes, DataType } from "../actions/actionTypes";
+import {SELECT_COUNTRY, SELECT_CAMP, SELECT_SCHOOL} from "../actions/actionTypes"
+import { FILTER_SCHOOLS, REMOVE_SCHOOL, RESET_SCHOOLS } from "../actions/actionTypes";
+
+
+
+interface StateType {
+    loading: boolean
+    data: DataType[]
+    error: string
+    camp: string
+	country: string
+	school: string
+    selectedSchool: string[]
+}
+
+const initialState = {
+    loading: false,
+    data: [],
+    error: '',
+    camp: '',
+    country: '',
+    school: '',
+    selectedSchool: ['']
+}
+
+const dataReducer = (state:StateType = initialState, action:ActionTypes): StateType =>{
+
+    switch(action.type){
+        case FETCH_DATA_REQUEST:
+            return {
+                loading: true,
+                data: [],
+                error: '',
+                camp: '',
+                country: '',
+                school: '',
+                selectedSchool: ['']
+            }
+        case FETCH_DATA_SUCCESS:
+            return {
+                loading: false,
+                data: action.data,
+                error: '',
+                camp: action.data[0].camp,
+                country: action.data[0].country,
+                school: "Show all",
+                selectedSchool: ['']
+            }
+        case FETCH_DATA_FALIURE:
+            return {
+                loading: false,
+                data: [],
+                error: action.error,
+                camp: '',
+                country: '',
+                school: '',
+                selectedSchool: ['']
+            }
+        case SELECT_COUNTRY:
+            return {...state, country: action.country}
+    
+        case SELECT_CAMP:
+            return {...state, camp: action.camp}
+
+        case SELECT_SCHOOL:
+            return {...state, school: action.school}
+
+        case FILTER_SCHOOLS:
+            
+            if(state.selectedSchool[0] === ""){
+                return {...state, selectedSchool: [action.selectedSchool]}
+            }else if (state.selectedSchool.indexOf(action.selectedSchool) > -1){
+                        return state
+            }else{
+                return {...state, selectedSchool: [...state.selectedSchool, action.selectedSchool]}
+            } 
+            case REMOVE_SCHOOL: 
+                return {...state, selectedSchool: state.selectedSchool.filter((elm)=> elm !== action.selectedSchool)}
+            
+            case RESET_SCHOOLS:
+                return {...state, selectedSchool: [""]}
+        default:
+            return state
+    }
+
+}
+
+export default dataReducer
