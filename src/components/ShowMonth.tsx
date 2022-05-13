@@ -33,7 +33,7 @@ const ShowMonth = ({data, country, camp, school, filteredSchools}: LinkProps)=>{
             <div>Data for the select point </div>
 
             <div>
-               {displayedData.map((data)=>{
+               {displayedData && displayedData.map((data)=>{
                    return data.map((elm)=>{
                     return <div className='data-container' key={elm.id}>
                         <div>
