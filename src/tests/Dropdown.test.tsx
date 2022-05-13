@@ -1,8 +1,6 @@
 import * as ReactDOM from 'react-dom';
 import {createMemoryHistory} from 'history'
-import {Router} from 'react-router-dom'
 import '@testing-library/jest-dom'
-import Home from '../components/Home';
 import { store } from '../store/rootStore';
 import { Provider } from 'react-redux';
 import DropDown from '../components/DropDown';
@@ -11,7 +9,8 @@ import {changeCountry, resetSchools, changeCamp, changeSchool } from '../actions
 
 
 
-test('landing on Home page', () => {
+
+it('test Dropdown', async () => {
     const countries: string[] = store.getState().data.data.map((elm: DataType) =>{
         return elm.country
     })
@@ -49,4 +48,6 @@ test('landing on Home page', () => {
 ,container)
 
 expect(container).toHaveTextContent("Select Country")
+
+
 })

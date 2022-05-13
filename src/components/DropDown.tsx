@@ -21,9 +21,9 @@ const DropDown = ({options, selected, label, onSelectionChange}: DropDownProps)=
         <div>
              
                 <label>{label}</label>
-                <select value={selected} onChange={(e)=>onChangeHandler(e)}>
+                <select  value={selected} onChange={(e)=>onChangeHandler(e)}>
                         {options.map((elm: string)=>{
-                            return <option key={elm} value={elm}>{elm}</option>
+                            return <option data-testid="option" key={elm} value={elm}>{elm}</option>
                         })}
                 </select>
      
