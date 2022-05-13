@@ -59,6 +59,7 @@
     max-height: 500px;
     background-color: white;
     margin : 30px;
+    min-width: 1025px;
 }
 
 .graph .chart{
@@ -74,6 +75,7 @@
     border-left: 1px solid gray;
     padding: 30px;
     overflow: scroll;
+    max-width: 275px;
     
 }
 
