@@ -297,7 +297,7 @@ SelectCamp | SelectSchool | FilteredSchool | ResetSchool | RemoveSchool
 export type AppActions = ActionTypes 
 ```
 
-***Decided to sotre the all the data to the same reducer as all depends on the same api response***
+***Decided to sotre the all the data in the same reducer as all depends on the same api response***
 
 
 ## Root Reducer & Data Reducer
@@ -374,7 +374,7 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
 }
 ```
 
-### index file to hold the combined reducers 
+### Index file to hold the combined reducers 
 
 ```javascript
 const RootReducer = combineReducers({
@@ -384,8 +384,149 @@ const RootReducer = combineReducers({
 export default RootReducer 
 ```
 
+## Create Store
+
+To be able to communicate the app state we need to create a store holding the intial state and the reducers with the thunk ***middelware to deal with the async actions***
+
+```javascript
+const logger = createLogger()
+
+export type AppState = ReturnType<typeof reducers>
+export const store = createStore<AppState, AppActions,{},{}>(
+    reducers, 
+    applyMiddleware(thunk as ThunkMiddleware<AppState, AppActions>,logger))
+```
+
+***used logger to console log state updated whenever a despatch is called***
+
+## Connect the store
+
+Connected the store to whole app to wrap all the components displayed and used within this app 
+
+## Use Router Dom 
+
+I started to install router dom to create the routes we will be using 
+
+- '/' url to have the home page displayed 
+- '/show/:str' dynamic url to route to whenever we click on point 
+
+```sh
+npm install @types/react-router-dom react-router-dom
+```
 
 
+## App Component
+
+```javascript
+const App: React.FC = ()=> {
+  return (
+    <React.StrictMode>
+          <Provider store={store}>
+             <Router>
+              <Routes>
+                  <Route path="/"  element={<Home/>} />
+                  <Route path="/show/:str" element={<ShowMonth/>} />
+              </Routes>
+            </Router>
+          </Provider>
+    </React.StrictMode>
+
+
+  );
+}
+
+export default App;
+```
+
+## Build all the app components 
+
+## Home Component 
+
+This Component rendered when I call url of '/' or [http://localhost:3001/](http://localhost:3001/)
+
+### wrap the app with the connect function to connect it to the store 
+
+We need to define the **mapStateToProps** to have an access to the main state 
+mapStateToProps will distract the used part of the state ***in this case the returned data from the api request***
+we need to define the used dispatch functions used within this component ***in this case apirequest()***
+
+```javascript
+interface Props {}
+interface LinkStateProps{
+    data: DataType[]
+}
+interface LinkDispatchProps{
+    apiRequest: ()=> void
+}
+
+type LinkProps = Props & LinkStateProps & LinkDispatchProps
+
+const mapStateToProps = (state: AppState): LinkStateProps =>{
+    return {
+        data: state.data.data
+    }
+}
+
+export default connect(mapStateToProps, {apiRequest})(Home)
+```
+
+### Render the component 
+
+We have two conditions when the app renders 
+
+- We still didn't get the data from the api **we will display the loading component**
+- We have the data from the api **we will display the MainPage component**
+
+#### UseEffect to start the api request
+
+```javascript
+  useEffect(()=>{
+
+    if(data.length === 0){
+      apiRequest()
+    }
+    return (()=>{})
+  },[apiRequest])
+```
+
+#### Return function to display the TSX 
+
+```javascript
+  return (
+        <>
+
+        
+        { data && <MainPage>
+            <ThemeSwitch/>
+          </MainPage>
+        }
+        
+       {
+         !data &&  <Loading/>
+       }
+        </>
+
+  );
+```
+
+## Loading Component 
+
+This comonent will be rendered only when we don't have data yet
+It has a simple layout 
+***No need to connect it to the store***
+
+```javascript
+const Loading: React.FC = ()=> {
+  return (
+        <>
+        loading...
+        </>
+
+  );
+}
+
+export default Loading;
+```
 
 
 
