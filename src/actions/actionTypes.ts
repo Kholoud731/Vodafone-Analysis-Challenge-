@@ -66,7 +66,9 @@ interface ResetSchool extends DataAsync{
 }
 
 
-export type ActionTypes = FetchDataRequest | FetchDataSuccess | FetchDataFaliure | SelectCountry | SelectCamp | SelectSchool | FilteredSchool | ResetSchool | RemoveSchool
+export type ActionTypes = FetchDataRequest | 
+FetchDataSuccess | FetchDataFaliure | SelectCountry | 
+SelectCamp | SelectSchool | FilteredSchool | ResetSchool | RemoveSchool
 
 
 // app actions to combine all types for the whole app 

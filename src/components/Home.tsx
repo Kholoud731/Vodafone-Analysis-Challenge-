@@ -37,8 +37,7 @@ const Home = ({data, apiRequest}: LinkProps)=> {
         <>
 
         
-        {
-          data && <MainPage>
+        { data && <MainPage>
             <ThemeSwitch/>
           </MainPage>
         }
