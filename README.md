@@ -13,7 +13,7 @@ link to backend: [Backend repo link](https://github.com/Kholoud731/Vodafone-Back
 
 In you backend app run npm install to install all the dependancies needed.
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:4000) to view the response it the browser to make sure it's working.
+Open [http://localhost:4000](http://localhost:4000) to view the response it the browser to make sure it's working.
 
 #### npm start
 
