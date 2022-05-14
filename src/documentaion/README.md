@@ -528,7 +528,176 @@ const Loading: React.FC = ()=> {
 export default Loading;
 ```
 
+## MainPage Component 
 
+this app will display mainly the rest of the components
+
+- Will display 3 Dropdown lists ***with the selected country school camp from the store*** 
+- Will display Header component ***static component only to display the header layout***
+- Will display the Chart ***that holds the lines from the selected school***
+- Will display a slider ***a list of checkboxes of the filltered schools to select from***
+
+I will show each function and line in details 
+
+### Used data from the store 
+
+We will use school, country and camp to add it's value to the Dropdown\
+We will use the data to get a list of unique schools, countries and campsa to send it as a prop to the dropdown as well
+
+
+```javascript
+interface LinkStateProps{
+    data: DataType[]
+    country : string
+    camp: string
+    school: string
+}
+```
+
+### Get the unique values for each dropdown 
+
+I used filter and map to distract the values from the data stored in the store state
+
+```javascript
+    const countries: string[] = data.map((elm: DataType) =>{
+        return elm.country
+    })
+
+    const uniqueCountrie: string[] = countries.filter(function (x, i, a) { 
+        return a.indexOf(x) === i; 
+    });
+
+    const camps : string[] = data.map((elm: DataType) =>{
+        return elm.camp
+    })
+
+    const uniqueCamp: string[] = camps.filter(function (x, i, a) { 
+        return a.indexOf(x) === i; 
+    });
+
+    const schools : string[] = data.map((elm: DataType) =>{
+        return elm.school
+    })
+
+    const uniqueSchools: string[] =["Show all" , ...schools.filter(function (x, i, a) { 
+        return a.indexOf(x) === i; 
+    })]
+```
+
+### Used actions 
+
+I selected actions to be used on event ***click*** whenver I change the selected value from the dropdown to update the store on the spot
+
+- ***changeCountry()*** for new country selected
+- ***changeCamp()*** for new camp selected 
+- ***changeSchool()*** for new school selected 
+- ***resetSchools()*** to reset the list of schools selected on the slider to show it's data 
+
+```javascript
+interface LinkDispatchProps{
+    changeCountry: (country: string)=>void
+    changeCamp: (camp:string)=>void
+    changeSchool: (school:string)=>void
+    resetSchools: ()=> void
+}
+```
+
+### OcClickHandler 
+
+This handeler passed as a prop to the Dropdown component to act apon the even to dispatch the proper action\
+Whenever I change the selected value from any of the dropdowns we will need to remove all the selected schools to be displayed on the chart as we have different data now 
+
+```javascript
+    const onSelectionChange = (e: string, data:string)=>{
+        if(data === "Select Country"){
+            changeCountry(e)
+            resetSchools()
+        }else if (data === "Select Camp"){
+            changeCamp(e)
+            resetSchools()
+        }else if (data === "Select School"){
+            resetSchools()
+            changeSchool(e)
+
+        }
+    }
+```
+
+### Sending the props to the Dropdown 
+
+We will send data to each component based on it's purpose 
+
+- one for country 
+- one for camp
+- one for school
+
+```javascript
+            <DropDown 
+            options={uniqueCountrie} 
+            selected={country}
+            label="Select Country"
+            onSelectionChange = {onSelectionChange}
+            />
+            <DropDown 
+            options={uniqueCamp} 
+            selected={ camp}
+            label="Select Camp"
+            onSelectionChange = {onSelectionChange}
+            />
+            <DropDown 
+            options={uniqueSchools} 
+            selected={school}
+            label="Select School"
+            onSelectionChange = {onSelectionChange}
+            />
+```
+
+### Return function 
+
+This function will return the tsx to add the components need to be displayed on the main page\
+Some need to have props and some only to be rendered 
+
+```javascript
+return(
+    <div className='pageSize'>
+    <div className='container'>
+        <Header/>
+        {children}
+       
+    </div>
+
+        <div className="selection">
+
+            <DropDown 
+            options={uniqueCountrie} 
+            selected={country}
+            label="Select Country"
+            onSelectionChange = {onSelectionChange}
+            />
+            <DropDown 
+            options={uniqueCamp} 
+            selected={ camp}
+            label="Select Camp"
+            onSelectionChange = {onSelectionChange}
+            />
+            <DropDown 
+            options={uniqueSchools} 
+            selected={school}
+            label="Select School"
+            onSelectionChange = {onSelectionChange}
+            />
+
+        </div>
+
+        <div className='graph'>
+            <Chart/>
+            <Slide/>
+        </div>
+
+
+    </div>
+)
+```
 
 
 
