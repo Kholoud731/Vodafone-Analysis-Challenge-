@@ -47,3 +47,7 @@ Launches the test runner in the interactive watch mode.
 
 This will compile the app and create the final version of the App.
 
+### Documentation 
+
+Please follow this link [Documentation](https://github.com/Kholoud731/Vodafone-Analysis-Challenge-/blob/main/src/documentaion/README.md)
+
