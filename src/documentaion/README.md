@@ -417,6 +417,9 @@ npm install @types/react-router-dom react-router-dom
 
 ## App Component
 
+Will warp the whole application and will define the routers used and which component will be rendered based on the url\
+Will connect the store to the whole App
+
 ```javascript
 const App: React.FC = ()=> {
   return (
@@ -438,7 +441,7 @@ const App: React.FC = ()=> {
 export default App;
 ```
 
-## Build all the app components 
+***Build all the app components***
 
 ## Home Component 
 
