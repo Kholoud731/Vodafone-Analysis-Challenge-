@@ -35,7 +35,7 @@ DataType : to define the type of the response received by the api.
 Each type has extra props to be edited later "will be described on a different section"
 
 
-Markup : ```javascript
+```
 export type DataType = {
     id: string
 	month: string
@@ -284,6 +284,20 @@ export const resetSchools = ():ActionTypes =>{
     }
 }
 ```
+
+## Wrap the whole App action type to be added later to the store 
+
+```javascript
+export type ActionTypes = FetchDataRequest | 
+FetchDataSuccess | FetchDataFaliure | SelectCountry | 
+SelectCamp | SelectSchool | FilteredSchool | ResetSchool | RemoveSchool
+
+
+// app actions to combine all types for the whole app 
+export type AppActions = ActionTypes 
+```
+
+***Decided to sotre the all the data to the same reducer as all depends on the same api response***
 
 
 
