@@ -34,7 +34,8 @@ all 4 types has the same type "DataAsync" { loading , data , error } the only di
 DataType : to define the type of the response received by the api.
 Each type has extra props to be edited later "will be described on a different section"
 
-```
+
+Markup : ```javascript
 export type DataType = {
     id: string
 	month: string
