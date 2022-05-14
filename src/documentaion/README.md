@@ -30,7 +30,9 @@ I started only created 4 types:
 - one to receive the error response if any type
 - one to have the async action to call the api type
 
-all 4 types has the same type the only difference is the typeof "type prop" of each creator.
+all 4 types has the same type "DataAsync" { loading , data , error } the only difference is the typeof "type prop" of each creator.
+DataType : to define the type of the response received by the api.
+Each type has extra props to be edited later "will be described on a different section"
 
 ```
 export type DataType = {
