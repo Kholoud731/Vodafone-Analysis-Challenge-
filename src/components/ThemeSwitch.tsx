@@ -12,6 +12,8 @@ const ThemeSwitch = ()=>{
         
         if(window.localStorage.getItem('theme') && switchRef.current?.className !== 'active'){
             setTheme('Dark')
+            document.body.style.background = "#2d2c2c"
+            document.body.style.color = "white"
             switchRef.current?.classList.add("active")
             switchRef.current?.click()
         }
@@ -24,6 +26,8 @@ const ThemeSwitch = ()=>{
             window.localStorage.removeItem('theme')
             switchRef.current?.classList.remove("active")
             setTheme('')
+            document.body.style.background = "#eee"
+            document.body.style.color = "#2d2c2c"
         }else if(theme && switchRef.current?.className !== 'active'){
             window.localStorage.setItem('theme', 'Dark')
             switchRef.current?.classList.add("active")

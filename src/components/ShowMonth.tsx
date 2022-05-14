@@ -28,9 +28,11 @@ const ShowMonth = ({data, country, camp, school, filteredSchools}: LinkProps)=>{
         })
     })
     return (
-        <div>
-
-            <div>Data for the select point </div>
+        <div className='pageSize'>
+            <div  className ="header">
+                <div data-testid="head" className ="main">Data for the select points</div>
+                <Link className='home-button' to={'/'} >Back to Home Page </Link>
+            </div>
 
             <div>
                {displayedData && displayedData.map((data)=>{
@@ -60,7 +62,7 @@ const ShowMonth = ({data, country, camp, school, filteredSchools}: LinkProps)=>{
                 })
                })}
             </div>
-            <Link to={'/'} >Back to Home Page </Link>
+           
         </div>
     )
 }

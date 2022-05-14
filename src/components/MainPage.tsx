@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import React from 'react';
 import { AppState } from "../store/rootStore";
 import {  DataType} from "../actions/actionTypes";
 import { changeCountry, changeCamp, changeSchool, resetSchools } from "../actions"; 
@@ -6,10 +7,11 @@ import DropDown from "./DropDown";
 import './main.css'
 import Slide from './Slide';
 import Chart from './Chart';
-import ThemeSwitch from './ThemeSwitch';
 import Header from './Header';
 
-interface Props {}
+interface Props {
+    children: React.ReactNode
+}
 interface LinkStateProps{
     data: DataType[]
     country : string
@@ -27,7 +29,7 @@ type LinkProps = Props & LinkStateProps & LinkDispatchProps
 
 
 
-const MainPage = ({data,country,camp, school, changeSchool, changeCamp, changeCountry, resetSchools}: LinkProps)=>{
+const MainPage = ({children,data,country,camp, school, changeSchool, changeCamp, changeCountry, resetSchools}: LinkProps)=>{
 
 
 
@@ -77,7 +79,7 @@ return(
     <div className='pageSize'>
     <div className='container'>
         <Header/>
-        <ThemeSwitch/>
+        {children}
        
     </div>
 

@@ -67,16 +67,36 @@ const Slide = ({data, country, camp, school, color, filteredSchools,filterSchool
         if(e.target.classList[0] === 'active'){
             const color = e.target.getAttribute('color')
             removeSchool(e.target.value, color? color : '')
+            e.target.removeAttribute('color')
             e.target.checked = false
             e.target.style.backgroundColor= 'white'
-            e.target.className = 'active'
+            removeOne()
         }else{
-            filterSchools(e.target.value, colorArray[filteredSchools.length])
-            e.target.setAttribute('color',colorArray[filteredSchools.length])
-            e.target.style.backgroundColor=colorArray[filteredSchools.length]
+
+            if(filteredSchools[0] === ''){
+                console.log(colorArray[filteredSchools.length])
+                filterSchools(e.target.value, colorArray[0])
+                e.target.setAttribute('color',colorArray[0])
+                e.target.style.backgroundColor=colorArray[0]
+            }else{
+                console.log(colorArray[filteredSchools.length])
+                filterSchools(e.target.value, colorArray[filteredSchools.length])
+                e.target.setAttribute('color',colorArray[filteredSchools.length])
+                e.target.style.backgroundColor=colorArray[filteredSchools.length]
+            }
+
         }
         e.target.classList.toggle('active')
         
+    }
+    let count = 0
+    const addOn = ()=>{
+        count++
+        return count
+    }
+    const removeOne = ()=>{
+        count--
+        return count
     }
 
     return (
@@ -88,26 +108,53 @@ const Slide = ({data, country, camp, school, color, filteredSchools,filterSchool
 
             <div className='sections'>
                 {dataforEchSchool.map((elm, index) =>{
-                    return <div className='total input' key={elm[0].id}>
-                         <div className='input'>
-                         <input 
-                         className=''
-                         type="checkbox" 
-                         value={elm[0].school} 
-                         name="school"
-                         style={{
-                            backgroundColor: color[index] ? color[index] : 'white'
-                         }}
-                         checked={filteredSchools.indexOf(elm[0].school) > -1 }
-                         onChange={(e)=>onChangeHandler(e)}
-                         />
-                         </div>
-                         <div style={{
-                            color: color[index] ? color[index] : 'gray'
-                         }}>
-                         <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
-                         </div>
-                         </div>
+                    if(filteredSchools.indexOf(elm[0].school) > -1 ){
+                        addOn()
+                        return <div className='total input' key={elm[0].id}>
+                        <div className='input'>
+                        <input 
+                        className=''
+                        type="checkbox" 
+                        value={elm[0].school} 
+                        name="school"
+                        style={{
+                           backgroundColor: color[ count -1],
+
+                        }}
+                        checked={filteredSchools.indexOf(elm[0].school) > -1 }
+                        onChange={(e)=>onChangeHandler(e)}
+                        />
+                        </div>
+                        <div style={{
+                           color: color[ count -1]
+                        }}>
+                        <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
+                        </div>
+                        </div>
+                    } else{
+                        return <div className='total input' key={elm[0].id}>
+                        <div className='input'>
+                        <input 
+                        className=''
+                        type="checkbox" 
+                        value={elm[0].school} 
+                        name="school"
+                        style={{
+                           backgroundColor: 'white',
+
+                        }}
+                        checked={filteredSchools.indexOf(elm[0].school) > -1 }
+                        onChange={(e)=>onChangeHandler(e)}
+                        />
+                        </div>
+                        <div style={{
+                           color: 'gray'
+                        }}>
+                        <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
+                        </div>
+                        </div>
+                    }
+
                 })}
             </div>
 

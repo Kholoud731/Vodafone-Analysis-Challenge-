@@ -7,6 +7,7 @@ import { apiRequest } from "../actions";
 
 import MainPage from "./MainPage";
 import Loading from './Loading';
+import ThemeSwitch from "./ThemeSwitch";
 
 interface Props {}
 interface LinkStateProps{
@@ -24,6 +25,7 @@ const Home = ({data, apiRequest}: LinkProps)=> {
 
 
   useEffect(()=>{
+
     if(data.length === 0){
       apiRequest()
     }
@@ -36,7 +38,9 @@ const Home = ({data, apiRequest}: LinkProps)=> {
 
         
         {
-          data && <MainPage/>
+          data && <MainPage>
+            <ThemeSwitch/>
+          </MainPage>
         }
         
        {

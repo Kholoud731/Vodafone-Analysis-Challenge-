@@ -2,6 +2,13 @@
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     background-color: #eee;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
 .container{
@@ -219,4 +226,13 @@ input[type="checkbox"]:checked {
 .pageSize{
   width: 1260px;
   margin: auto;
+}
+
+.home-button{
+  display: inline-block;
+  text-decoration: none;
+  color: #eee;
+  background-color: #956eb1;
+  padding: 10px;
+  border-radius: 5px;
 }
