@@ -33,7 +33,7 @@ I started only created 4 types:
 all 4 types has the same type the only difference is the typeof "type prop" of each creator.
 
 ![Screenshot](imgs/actionstype.png)
-<img src="imgs/actionstype.png" alt="Alt text" title="Optional title">
+<img src="imgs/actionstype.png" width="400" >
 
 ### Create action creators on a separate file
 
@@ -46,7 +46,8 @@ In the same folder there’s a file to host all the functions for each action cr
 
 based on the api response from the middleware I started to dispatch related action creators 
 
-![Screenshot](../imgs/actionsfunction.png)
+
+<img src="imgs/actionsfunction.png" width="400" >
 
 
 
