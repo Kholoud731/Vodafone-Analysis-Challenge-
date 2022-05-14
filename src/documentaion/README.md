@@ -35,7 +35,7 @@ DataType : to define the type of the response received by the api.
 Each type has extra props to be edited later "will be described on a different section"
 
 
-```
+```javascript
 export type DataType = {
     id: string
 	month: string
@@ -81,7 +81,7 @@ In the same folder there’s a file to host all the functions for each action cr
 
 based on the api response from the middleware I started to dispatch related action creators 
 
-```
+```javascript
 // this part for fetching data
 export const requestData = (): ActionTypes =>{
     return {
@@ -154,7 +154,7 @@ All action creators share the same data type the difference as was explained in 
 
 #### Types 
 
-```
+```javascript
 interface SelectCountry extends DataAsync{
     type: typeof SELECT_COUNTRY
 }
@@ -169,7 +169,7 @@ interface SelectSchool extends DataAsync{
 
 #### Action creators 
 
-```
+```javascript
 export const changeCountry = (country : string): ActionTypes=>{
     return {
         type: SELECT_COUNTRY,
@@ -226,7 +226,7 @@ All action creators share the same data type the difference as was explained in 
 
 #### Types 
 
-```
+```javascript
 interface FilteredSchool extends DataAsync{
     type: typeof FILTER_SCHOOLS
 }
@@ -241,7 +241,7 @@ interface ResetSchool extends DataAsync{
 
 #### Action creatos  
 
-```
+```javascript
 export const filterSchools = (school: string, color: string):ActionTypes =>{
     return {
         type: FILTER_SCHOOLS,
@@ -298,6 +298,91 @@ export type AppActions = ActionTypes
 ```
 
 ***Decided to sotre the all the data to the same reducer as all depends on the same api response***
+
+
+## Root Reducer & Data Reducer
+
+Root reducer was designed to give the option later if we wanted to add extra reducers and combine them later 
+Data reducer has all the cases for all the action creators introduced above 
+
+```javascript
+const dataReducer = (state:StateType = initialState, action:ActionTypes): StateType =>{
+
+    switch(action.type){
+        case FETCH_DATA_REQUEST:
+            return {
+                loading: true,
+                data: [],
+                error: '',
+                camp: '',
+                country: '',
+                school: '',
+                selectedSchool: [''],
+                lineColor:['']
+            }
+        case FETCH_DATA_SUCCESS:
+            return {
+                loading: false,
+                data: action.data,
+                error: '',
+                camp: action.data[0].camp,
+                country: action.data[0].country,
+                school: "Show all",
+                selectedSchool: [''],
+                lineColor:['']
+            }
+        case FETCH_DATA_FALIURE:
+            return {
+                loading: false,
+                data: [],
+                error: action.error,
+                camp: '',
+                country: '',
+                school: '',
+                selectedSchool: [''],
+                lineColor:['']
+            }
+        case SELECT_COUNTRY:
+            return {...state, country: action.country}
+    
+        case SELECT_CAMP:
+            return {...state, camp: action.camp}
+
+        case SELECT_SCHOOL:
+            return {...state, school: action.school}
+
+        case FILTER_SCHOOLS:
+            
+            if(state.selectedSchool[0] === ""){
+                return {...state, selectedSchool: [action.selectedSchool], lineColor: [action.lineColor]}
+            }else if (state.selectedSchool.indexOf(action.selectedSchool) > -1){
+                        return state
+            }else{
+                return {...state, selectedSchool: [...state.selectedSchool, action.selectedSchool], lineColor: [...state.lineColor, action.lineColor]}
+            } 
+            case REMOVE_SCHOOL: 
+                return {...state, 
+                    selectedSchool: state.selectedSchool.filter((elm)=> elm !== action.selectedSchool),
+                     lineColor: state.lineColor.filter((elm)=> elm !== action.lineColor)}
+            
+            case RESET_SCHOOLS:
+                return {...state, selectedSchool: [""], lineColor:['']}
+        default:
+            return state
+    }
+
+}
+```
+
+### index file to hold the combined reducers 
+
+```javascript
+const RootReducer = combineReducers({
+    data: dataReducer
+})
+
+export default RootReducer 
+```
 
 
 
