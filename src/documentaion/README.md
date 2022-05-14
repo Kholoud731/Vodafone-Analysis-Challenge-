@@ -952,6 +952,12 @@ return (
 
 This component will communicate with the store to get the school list with the list of color to add it or remove it from the canvas.
 
+### Install package 
+
+```sh
+npm i recharts
+```
+
 ### State values to be used
 
 we need to access the state for those needs 
