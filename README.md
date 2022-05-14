@@ -7,7 +7,7 @@
 #### git clone "github repo for backend"
 
 please find the link for the backend to receive the required api to run the front end app.\
-link to backend: [link](https://github.com/Kholoud731/Vodafone-Backend) 
+link to backend: [Backend repo link](https://github.com/Kholoud731/Vodafone-Backend) 
 
 #### npm install 
 
