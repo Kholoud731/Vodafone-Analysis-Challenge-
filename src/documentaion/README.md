@@ -881,7 +881,7 @@ We will loop over the unique schools with the total number of lessons\
 We will check if this school on the selected school list and add the color with a conditional style rendering 
 
 ```javascript
-    return (
+return (
         <div className="slide">
             <div className='total heading'>
                 <span>{findNumberOfLessons(filteredData)}</span> lessons<div>in {camp}</div>
@@ -943,13 +943,324 @@ We will check if this school on the selected school list and add the color with 
         
         </div>
     )
-    ```
+ ```
     
 ## Chart Component 
 
 This component will communicate with the store to get the school list with the list of color to add it or remove it from the canvas.
 
+### State values to be used
 
+we need to access the state for those needs 
+
+- list of schools to know which will be rendered 
+- list of colors to know the color will be added to it to match the slider color 
+- country , school and camp will be used to loop over the data to get the values for each school with it's lessons per month
+
+```javascript
+interface LinkStateProps{
+    fetchedData: DataType[]
+    country : string
+    camp: string
+    school: string
+    filteredSchools: string[]
+    color: string[]
+}
+```
+
+### Data to be passed to the chart 
+
+country , school and camp will be used to loop over the data to get the values for each school with it's lessons per month
+
+```javascript
+  const ghraphs = filteredSchools.map((school)=> {
+    return fetchedData.filter((elm: DataType)=> {
+      return elm.country === country && elm.camp === camp && elm.school === school
+        })
+  })
+
+
+  const findMonthsLessons = (arr: DataType[]) : number[]=>{
+
+    const setofData: number[] = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+    for(let i =0; i< labels.length; i++){
+        for(let j = 0; j < arr.length; j++){
+          if(labels[i] === arr[j].month){
+            if(setofData[i]){
+              setofData[i] += arr[j].lessons
+            }else{
+              setofData[i] = arr[j].lessons
+            }
+            
+          }else {
+            continue
+        }}
+    
+        }
+        return setofData
+      }
+    
+
+  const lessonsPerMonth = ghraphs.map((g)=>{
+        return findMonthsLessons(g)
+      })
+
+  const data: {}[] = [
+  ];
+
+  filteredSchools.forEach((school, index)=>{
+    labels.forEach((month , i)=> {
+      data[i] = {...data[i], "month": month, [school]: lessonsPerMonth[index][i]}
+    })
+  
+  })
+```
+
+***Now we have the data which will be passed to the chart for a line display***
+
+### Return function
+
+This will display the chart with the exact data\
+We will add Link from the Router component to redirect us to the clicked point to display the related data 
+
+```javascript
+  return (
+
+    <>    
+    <LineChart
+      width={750}
+      height={500}
+      data={data}
+      margin={{
+        top: 40,
+        right: 0,
+        left: 60,
+        bottom: 5
+      }}
+      onClick={demoOnClick}
+    >
+      <CartesianGrid vertical={false}  fill='white'  />
+      <XAxis dataKey="month" stroke= 'gray'/>
+      <YAxis type='number' width={1} 
+        label={{
+          value: 'No of lessons',
+          position: {x: 90, y: -30},
+          className: 'chart__label',
+          stroke: '#eee'
+        }}
+        stroke= 'gray'
+        axisLine={{ stroke: '#EAF0F4' }}
+      tickSize={0} >
+        
+      </YAxis>
+      <Tooltip viewBox={{ x: 0, y: 0, width: 200, height: 200 }}  />
+      {filteredSchools.map((school, index)=>{return <Line type="linear"  key={school} dataKey={school} stroke={color[index]} strokeWidth={2} dot={{ r: 5 }}  activeDot={{ r: 5 }} />})} 
+
+      
+    </LineChart>
+
+      <Link to={`show/${month}`} ref={linkRef}/>
+
+
+    </>
+
+  )
+```
+
+### Click Events 
+
+We have 2 click events 
+
+- one attached to the point and it will trigged **demoOnClick()** handeler 
+- **demoOnClick** handeler will get the month out of the event object sent with the chart 
+- UseEffect function will watch if the month value has been changed to click on the link component to redirect us to tge required route
+
+```javascript
+const demoOnClick = (e: any)=> {
+    console.log(e.activeLabel)
+    setMonth(e.activeLabel)
+
+
+}
+
+useEffect(() => {
+  if(month){
+    linkRef.current?.click()
+  }
+}, [month])
+```
+
+## ShowMonth Component 
+
+This component displaied with whenever we change the url\
+It will check what is the parameter sent to the url and use it to search with the help of the data stored it the store
+
+### State used 
+
+We will loop over all the array of response data\
+With the help of the selected country , schools , camp and the filtered schools list we will get the data to be displayed 
+
+```javascript
+interface LinkStateProps{
+    data: DataType[]
+    country : string
+    camp: string
+    school: string
+    filteredSchools: string[]
+}
+```
+
+### Displayed data function 
+
+With the help of the selected country , schools , camp and the filtered schools list we will get the data to be displayed
+
+```javascript
+    const displayedData = filteredSchools.map((school)=>{
+        return data.filter((elm)=>{
+            return elm.country === country && elm.camp === camp && elm.school === school && elm.month === month
+        })
+    })
+```
+
+## Return Function 
+
+Now we will loop over the data to diplay it on the screen 
+
+```javascript
+    return (
+        <div className='pageSize'>
+            <div  className ="header">
+                <div data-testid="head" className ="main">Data for the selected points</div>
+                <Link className='home-button' to={'/'} >Back to Home Page </Link>
+            </div>
+
+            <div>
+               {displayedData && displayedData.map((data)=>{
+                   return data.map((elm)=>{
+                    return <div className='data-container' key={elm.id}>
+                        <div className='border'>
+                        <div className='row'>
+                        <div className='title'>
+                            ID
+                                </div>
+                            <div>
+                            {elm.id}
+                                </div>
+                            </div>
+                        
+                        <div className='row'>
+                        <div className='title'>
+                            Country
+                                </div>
+                            <div>
+                            {elm.country}
+                                </div>
+                            </div>
+
+                        <div className='row'>
+                            <div className='title'>
+                            Camp
+                                </div>
+                            <div>
+                            {elm.camp}
+                                </div>
+                            </div>
+
+                        <div className='row'>
+                            <div className='title'>
+                            School
+                                </div>
+                            <div>
+                            {elm.school}
+                                </div>
+                            </div>
+                        <div className='row'>
+                            <div className='title'>
+                            Month
+                                </div>
+                            <div>
+                            {elm.month}
+                                </div>
+                            </div>
+
+                        <div className='row'>
+                            <div className='title'>
+                            Lessons
+                                </div>
+                            <div>
+                            {elm.lessons }
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                })
+               })}
+            </div>
+           
+        </div>
+    )
+ ```
+ 
+ ## SwitchTheme Component 
+ 
+ This component will check and set the theme color to the localStorage to know what it the proper background to add 
+ 
+ ### UseEffect and click event 
+ 
+ We will use use effect to access the localstorage to check if we have the data and we will store the value on a state\
+ by listening to the theme on the component state we will decide the actions taken on the checkbox to be clicked or not and to change the color of the whole app or not 
+ 
+ ```javascript
+     useEffect(()=>{
+        
+        if(window.localStorage.getItem('theme') && switchRef.current?.className !== 'active'){
+            setTheme('Dark')
+            document.body.style.background = "#2d2c2c"
+            document.body.style.color = "white"
+            switchRef.current?.classList.add("active")
+            switchRef.current?.click()
+        }
+
+
+    },[theme])
+ ```
+ 
+ ### OnClickEnevt 
+ 
+ ```javascript
+     const changetheme = (e: React.MouseEvent<HTMLInputElement, MouseEvent>)=>{
+        if(theme && switchRef.current?.className === 'active'){
+            window.localStorage.removeItem('theme')
+            switchRef.current?.classList.remove("active")
+            setTheme('')
+            document.body.style.background = "#eee"
+            document.body.style.color = "#2d2c2c"
+        }else if(theme && switchRef.current?.className !== 'active'){
+            window.localStorage.setItem('theme', 'Dark')
+            switchRef.current?.classList.add("active")
+
+        }else{
+            window.localStorage.setItem('theme', 'Dark')
+            setTheme('Dark')
+        }
+    } 
+ ```
+ 
+ ### Return function 
+ 
+ ```javascript
+     return (
+        <div className='theme'>
+        <span className='dark'> Dark Mode </span> 
+     <label htmlFor='switch' className="switch">
+     <input id="switch" type="checkbox" onClick={(e)=>changetheme(e)} ref={switchRef}/>
+     <span className="slider round"></span>
+     </label>
+     </div>
+    )
+ ```
 
 
 
