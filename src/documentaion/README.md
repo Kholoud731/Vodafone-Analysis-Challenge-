@@ -54,6 +54,16 @@ interface DataAsync {
 
 }
 
+interface FetchDataRequest extends DataAsync{
+    type: typeof FETCH_DATA_REQUEST
+}
+interface FetchDataSuccess extends DataAsync{
+    type: typeof FETCH_DATA_SUCCESS
+}
+
+interface FetchDataFaliure extends DataAsync{
+    type: typeof FETCH_DATA_FALIURE
+}
 ```
 
 
@@ -68,7 +78,66 @@ In the same folder there’s a file to host all the functions for each action cr
 
 based on the api response from the middleware I started to dispatch related action creators 
 
+```
+// this part for fetching data
+export const requestData = (): ActionTypes =>{
+    return {
+        type: FETCH_DATA_REQUEST,
+        loading: true,
+        data: [],
+        error: '',
+        camp: '',
+        country: '',
+        school: '',
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
 
+export const receiveData = (data: DataType[]): ActionTypes =>{
+    return {
+        type: FETCH_DATA_SUCCESS,
+        loading: false,
+        data: data,
+        error: '',
+        camp: data[0].camp,
+        country: data[0].country,
+        school: data[0].school,
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
+
+export const invalidData = (): ActionTypes =>{
+    return {
+        type: FETCH_DATA_FALIURE,
+        loading: false,
+        data: [],
+        error: 'unable to fetch data',
+        camp: '',
+        country: '',
+        school: '',
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
+
+//  async using thunk
+export const apiRequest = ()=>{
+    return (dispatch: Dispatch<ActionTypes>, getState: AppState)=>{
+        dispatch(requestData())
+        return fetch('http://localhost:4000/')
+        .then(res => res.json())
+        .then((data: DataType[]) =>{
+            dispatch(receiveData(data))
+        })
+        .catch(error =>{
+            dispatch(invalidData())
+        })
+        
+    }
+}
+```
 
 
 
