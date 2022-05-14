@@ -1,4 +1,4 @@
-# Documentation of steps made to finalise this app
+# Documentation of steps made to finalize this app
 
 ### Create typeScript React App
 
