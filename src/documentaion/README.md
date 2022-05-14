@@ -141,9 +141,148 @@ export const apiRequest = ()=>{
 }
 ```
 
+### Extra action creators "Select From Dropdown"
+
+I have added extra action creators to store the selected data from the Dropdown 
+
+- one to change the country and it has a default value of the first element of the array of object responses 
+- one to change the camp and it has a default value of the first element of the array of object responses 
+- one to change the school and it's empty as we hav an extra option to show all the schools. 
+
+All action creators share the same data type the difference as was explained in the type prop of each creator 
+
+#### Types 
+
+```
+interface SelectCountry extends DataAsync{
+    type: typeof SELECT_COUNTRY
+}
+interface SelectCamp extends DataAsync{
+    type: typeof SELECT_CAMP
+}
+
+interface SelectSchool extends DataAsync{
+    type: typeof SELECT_SCHOOL
+}
+```
+
+#### Action creators 
+
+```
+export const changeCountry = (country : string): ActionTypes=>{
+    return {
+        type: SELECT_COUNTRY,
+        loading: false,
+        data: [],
+        error: '',
+        camp: '',
+        country:country,
+        school: '',
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
+
+export const changeCamp = (camp : string): ActionTypes=>{
+    return {
+        type: SELECT_CAMP,
+        loading: false,
+        data: [],
+        error: '',
+        camp: camp,
+        country: '',
+        school: '',
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
 
 
+export const changeSchool = (school : string): ActionTypes=>{
+    return {
+        type: SELECT_SCHOOL,
+        loading: false,
+        data: [],
+        error: '',
+        camp: '',
+        country: '',
+        school: school,
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
+```
 
+### Extra action creators "Selected school to display it's data"
+
+I have added extra action creators to store the selected school from the Slider 
+
+- add selected school 
+- remove the school from the selected array
+- reset array to empty 
+
+All action creators share the same data type the difference as was explained in the type prop of each creator 
+
+#### Types 
+
+```
+interface FilteredSchool extends DataAsync{
+    type: typeof FILTER_SCHOOLS
+}
+interface RemoveSchool extends DataAsync{
+    type: typeof REMOVE_SCHOOL
+}
+
+interface ResetSchool extends DataAsync{
+    type: typeof RESET_SCHOOLS
+}
+```
+
+#### Action creatos  
+
+```
+export const filterSchools = (school: string, color: string):ActionTypes =>{
+    return {
+        type: FILTER_SCHOOLS,
+        loading: false,
+        data: [],
+        error: '',
+        camp: '',
+        country: '',
+        school: school,
+        selectedSchool: school,
+        lineColor: color
+    }
+}
+
+export const removeSchool = (school: string, color: string):ActionTypes => {
+    return {
+        type: REMOVE_SCHOOL,
+        loading: false,
+        data: [],
+        error: '',
+        camp: '',
+        country: '',
+        school: school,
+        selectedSchool: school,
+        lineColor: color
+    }
+}
+
+export const resetSchools = ():ActionTypes =>{
+    return {
+        type: RESET_SCHOOLS,
+        loading: false,
+        data: [],
+        error: '',
+        camp: '',
+        country: '',
+        school: '',
+        selectedSchool: '',
+        lineColor: ''
+    }
+}
+```
 
 
 
