@@ -33,6 +33,7 @@ I started only created 4 types:
 all 4 types has the same type the only difference is the typeof "type prop" of each creator.
 
 ![Screenshot](../imgs/actionstype.png)
+<img src="../imgs/actionstype.png" alt="Alt text" title="Optional title">
 
 ### Create action creators on a separate file
 
