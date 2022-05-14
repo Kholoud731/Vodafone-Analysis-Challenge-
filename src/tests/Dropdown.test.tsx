@@ -1,5 +1,5 @@
-import * as ReactDOM from 'react-dom';
 import {createMemoryHistory} from 'history'
+import {render , screen, } from "@testing-library/react"
 import '@testing-library/jest-dom'
 import { store } from '../store/rootStore';
 import { Provider } from 'react-redux';
@@ -36,7 +36,7 @@ it('test Dropdown', async () => {
   history.push('/')
   let container = document.createElement("div");
   document.body.appendChild(container);
-  ReactDOM.render(
+ render(
     <Provider store={store}>
     <DropDown 
                 options={uniqueCountrie} 
@@ -45,9 +45,8 @@ it('test Dropdown', async () => {
                 onSelectionChange = {onSelectionChange}
     />
     </Provider>
-,container)
+)
 
-expect(container).toHaveTextContent("Select Country")
-
+expect(screen.getByText(/Select Country/i)).toBeInTheDocument();
 
 })

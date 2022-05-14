@@ -1,6 +1,6 @@
 import * as ReactDOM from 'react-dom';
 import {createMemoryHistory} from 'history'
-import React from 'react'
+import {render , screen, } from "@testing-library/react"
 import {Router} from 'react-router-dom'
 import '@testing-library/jest-dom'
 import Home from '../components/Home';
@@ -11,32 +11,26 @@ import ShowMonth from '../components/ShowMonth';
 test('landing on Home page', () => {
     const history = createMemoryHistory()
     history.push('/')
-    let container = document.createElement("div");
-    document.body.appendChild(container);
-    ReactDOM.render(
+    render(
       <Provider store={store}>
     <Router location={history.location} navigator={history}>
       <Home/>
     </Router>
-      </Provider>
-,container)
+      </Provider>)
+  expect(screen.getByText(/Analysis Chart/i)).toBeInTheDocument();
 
-  expect(container).toHaveTextContent("Analysis Chart")
 })
 
 test('landing on the other url', () => {
     const history = createMemoryHistory()
     history.push('/show/Nov')
-    let container = document.createElement("div");
-    document.body.appendChild(container);
-    ReactDOM.render(
+    render(
         <Provider store={store}>
         <Router location={history.location} navigator={history}>
           <ShowMonth/>
         </Router>
-          </Provider>
-,container)
+          </Provider>)
+expect(screen.getByText(/Data/i)).toBeInTheDocument();
 
-expect(container).toHaveTextContent("Data")
 })
 

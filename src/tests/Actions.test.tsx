@@ -8,7 +8,6 @@ import {
     removeSchool,
     resetSchools,
     requestData,
-    receiveData,
     invalidData
 } from '../actions'
 
@@ -69,3 +68,28 @@ test('Recive Error',  ()=>{
     expect(res.selectedSchool).toBeFalsy()
 
 })
+
+
+test('filter school list', ()=>{
+    const output = filterSchools("kholoud", "#eee")
+
+    expect(output.selectedSchool).toBe("kholoud")
+    expect(output.lineColor).toBe("#eee")
+})
+
+test('remove from school list', ()=>{
+    const output = removeSchool("kholoud", "#eee")
+
+    expect(output.selectedSchool).toBe("kholoud")
+    expect(output.lineColor).toBe("#eee")
+})
+
+
+test('reset school list', ()=>{
+    const output = resetSchools()
+
+    expect(output.selectedSchool).toBeFalsy()
+    expect(output.lineColor).toBeFalsy()
+})
+
+
