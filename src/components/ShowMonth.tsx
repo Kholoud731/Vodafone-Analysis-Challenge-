@@ -30,7 +30,7 @@ const ShowMonth = ({data, country, camp, school, filteredSchools}: LinkProps)=>{
     return (
         <div className='pageSize'>
             <div  className ="header">
-                <div data-testid="head" className ="main">Data for the select points</div>
+                <div data-testid="head" className ="main">Data for the selected points</div>
                 <Link className='home-button' to={'/'} >Back to Home Page </Link>
             </div>
 
@@ -38,26 +38,61 @@ const ShowMonth = ({data, country, camp, school, filteredSchools}: LinkProps)=>{
                {displayedData && displayedData.map((data)=>{
                    return data.map((elm)=>{
                     return <div className='data-container' key={elm.id}>
-                        <div>
-                           ID: {elm.id}
+                        <div className='border'>
+                        <div className='row'>
+                        <div className='title'>
+                            ID
+                                </div>
+                            <div>
+                            {elm.id}
+                                </div>
                             </div>
-                        <div>
-                            Country: {elm.country}
-                            </div>
-                        <div>
-                            Camp: {elm.camp}
-                            </div>
-                        <div>
-                            School: {elm.school}
-                            </div>
-                        <div>
-                            Month: {elm.month}
-                        </div>
-                        <div>
-                            Lessons: {elm.lessons }
+                        
+                        <div className='row'>
+                        <div className='title'>
+                            Country
+                                </div>
+                            <div>
+                            {elm.country}
+                                </div>
                             </div>
 
-                        
+                        <div className='row'>
+                            <div className='title'>
+                            Camp
+                                </div>
+                            <div>
+                            {elm.camp}
+                                </div>
+                            </div>
+
+                        <div className='row'>
+                            <div className='title'>
+                            School
+                                </div>
+                            <div>
+                            {elm.school}
+                                </div>
+                            </div>
+                        <div className='row'>
+                            <div className='title'>
+                            Month
+                                </div>
+                            <div>
+                            {elm.month}
+                                </div>
+                            </div>
+
+                        <div className='row'>
+                            <div className='title'>
+                            Lessons
+                                </div>
+                            <div>
+                            {elm.lessons }
+                                </div>
+                            </div>
+
+                        </div>
                         </div>
                 })
                })}
