@@ -1,8 +1,10 @@
 # Vodafone Analysis App
 
-## How to run this app to have it working? 
+## How to run App? 
+
 
 ### BackEnd Setup
+
 
 #### git clone "github repo for backend"
 
@@ -11,16 +13,17 @@ link to backend: [Backend repo link](https://github.com/Kholoud731/Vodafone-Back
 
 #### npm install 
 
-In you backend app run npm install to install all the dependancies needed.
-Runs the app in the development mode.\
-Open [http://localhost:4000](http://localhost:4000) to view the response it the browser to make sure it's working.
+In you backend app run npm install to install all the dependancies needed.\
+Runs the app in the development mode.
 
 #### npm start
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:4000](http://localhost:4000) to view the response it the browser to make sure it's working.
+
 
 ### Front End Setup
+
 
 #### git clone "app github link"
 
