@@ -76,6 +76,7 @@ body{
     margin : 30px;
     min-width: 1025px;
     justify-content: space-between;
+    border-radius: 10px;
 }
 
 .graph .chart{
