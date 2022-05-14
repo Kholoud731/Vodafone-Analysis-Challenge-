@@ -951,6 +951,7 @@ return (
 ## Chart Component 
 
 This component will communicate with the store to get the school list with the list of color to add it or remove it from the canvas.
+I used Rechart as it was easier to edit the styling and passing the data to it.
 
 ### Install package 
 
