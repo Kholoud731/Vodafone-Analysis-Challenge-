@@ -22,7 +22,7 @@ npm start to run the server and to make sure it's working properly and send a js
 
 ### Create all the actions types with the action return types in a separate file 
 
-in separate action folder I started to create all types needed to fetch the response from the backend 
+in separate action folder I started to create all types needed to fetch the response from the backend\ 
 I started only created 4 types: 
 
 - one to request data type
@@ -30,8 +30,8 @@ I started only created 4 types:
 - one to receive the error response if any type
 - one to have the async action to call the api type
 
-all 4 types has the same type "DataAsync" { loading , data , error } the only difference is the typeof "type prop" of each creator.
-DataType : to define the type of the response received by the api.
+all 4 types has the same type "DataAsync" { loading , data , error } the only difference is the typeof "type prop" of each creator.\
+DataType : to define the type of the response received by the api.\
 Each type has extra props to be edited later "will be described on a different section"
 
 
@@ -302,7 +302,7 @@ export type AppActions = ActionTypes
 
 ## Root Reducer & Data Reducer
 
-Root reducer was designed to give the option later if we wanted to add extra reducers and combine them later 
+Root reducer was designed to give the option later if we wanted to add extra reducers and combine them later\ 
 Data reducer has all the cases for all the action creators introduced above 
 
 ```javascript
@@ -446,8 +446,8 @@ This Component rendered when I call url of '/' or [http://localhost:3001/](http:
 
 ### wrap the app with the connect function to connect it to the store 
 
-We need to define the **mapStateToProps** to have an access to the main state 
-mapStateToProps will distract the used part of the state ***in this case the returned data from the api request***
+We need to define the **mapStateToProps** to have an access to the main state\ 
+mapStateToProps will distract the used part of the state ***in this case the returned data from the api request***\
 we need to define the used dispatch functions used within this component ***in this case apirequest()***
 
 ```javascript
@@ -511,8 +511,8 @@ We have two conditions when the app renders
 
 ## Loading Component 
 
-This comonent will be rendered only when we don't have data yet
-It has a simple layout 
+This comonent will be rendered only when we don't have data yet\
+It has a simple layout\
 ***No need to connect it to the store***
 
 ```javascript
