@@ -699,14 +699,255 @@ return(
 )
 ```
 
+## Header Component 
+
+This component has been sepetered in case we wanted to refactor and add more static or dynamic content\
+It contains a simple TSX\
+No need to be connected with the store
+
+### Return function 
+
+```javascript
+    return (
+        <div  className ="header">
+        <div data-testid="head" className ="main">Analysis Chart </div>
+        <div data-testid="head" className ="second">Number of lessons</div>
+    </div>
+    )
+```
+
+## DropDown Component 
+
+This app doesn’t needs to be connected to the store\
+We need to add type to the props received from the parent
+
+- We will pass label for each component 
+- We will pass an event ***click*** from parent ***parent will decide which dispatch method will be used***
+- We will pass the unique values to loop on it as add it as an option to each element 
+- We will pass the selected value once we pass it from parent ***parent will git the value from the store***
+- Each component will communicate the new selected value with the parent 
+
+### Props recived from parent 
+
+```javascript
+type DropDownProps = {
+    options: string[]
+    selected: string
+    label: string
+    onSelectionChange: (e: string, lable: string)=>void
+}
+```
+
+### OnClickHandeler 
+
+This method will sent the new selected value to the parent based on the targeted element we clicked on 
+
+```javascript
+    const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=>{
+        onSelectionChange(e.target.value, label)
+    }
+```
+
+### Return function 
+
+```javascript
+    return (
+        <div>
+             
+                <label>{label}</label>
+                <select  value={selected} onChange={(e)=>onChangeHandler(e)}>
+                        {options.map((elm: string)=>{
+                            return <option data-testid="option" key={elm} value={elm}>{elm}</option>
+                        })}
+                </select>
+     
+
+        </div>
+    )
+```
+
+## Slider Component 
+
+This component will connect to the store to add the selected list of schools to display it's values\
+Will send to the store the color of each School to be easily accessible and visible\
+We will need to have and access to dispatch functions to add or remove a school from the list with it's color based on the click event
+
+### Store value needed 
+
+We will need to have an access to the selected country , school and camp to filter the list of the data to be displayed\
+We need to have an access to each school from the list and each color to connect the color with the school based on it's index\
 
 
+```javascript
+interface LinkStateProps{
+    data: DataType[]
+    country : string
+    camp: string
+    school: string
+    filteredSchools: string[]
+    color: string[]
+}
+```
 
+### Dispatch actions 
 
+```javascript
+interface LinkDispatchProps{
+    filterSchools : (data: string, color:string)=> void
+    removeSchool: (data: string, color:string) => void
+}
+```
 
+### Filtered list function
 
+We will need to have an array of the unique schooles regardless the month to loop over it and display it on the screen
 
+```javascript
+    const filteredData = data.filter((elm)=> {
+        if(school === "Show all"){
+            return elm.country === country && elm.camp === camp 
+        }else {
+            return elm.country === country && elm.camp === camp && elm.school === school
+        }
+    })
 
+    const schools: string[] = filteredData.map((elm: DataType) =>{
+        return elm.school
+    })
+
+    const uniqueSchools: string[] = schools.filter(function (x, i, a) { 
+        return a.indexOf(x) === i; 
+    });
+
+    const dataforEchSchool = uniqueSchools.map(school => {
+        return filteredData.filter((elm)=> elm.school === school)
+    })
+```
+
+### Sum of lessons function 
+
+We need to have a function to get the sum of the lessons based on the array sent\
+We will use it twice 
+
+- one time to get number of leassons to each school
+- one time to get number of lessons to each camp selected 
+
+```javascript
+    const findNumberOfLessons = (data: DataType[]): number=>{
+        const sum = data.reduce(function (accumulator, curValue) {
+            return accumulator + curValue.lessons
+        }, 0)
+
+        return sum
+    }
+```
+
+### OnClick handler 
+
+This handeler will decide the color to be sent to the list of colors with the school added or removed from the list 
+
+```javascript
+    const onChangeHandler = (e:  React.ChangeEvent<HTMLInputElement>)=>{
+        if(e.target.classList[0] === 'active'){
+            const color = e.target.getAttribute('color')
+            removeSchool(e.target.value, color? color : '')
+            e.target.removeAttribute('color')
+            e.target.checked = false
+            e.target.style.backgroundColor= 'white'
+            removeOne()
+        }else{
+
+            if(filteredSchools[0] === ''){
+                console.log(colorArray[filteredSchools.length])
+                filterSchools(e.target.value, colorArray[0])
+                e.target.setAttribute('color',colorArray[0])
+                e.target.style.backgroundColor=colorArray[0]
+            }else{
+                console.log(colorArray[filteredSchools.length])
+                filterSchools(e.target.value, colorArray[filteredSchools.length])
+                e.target.setAttribute('color',colorArray[filteredSchools.length])
+                e.target.style.backgroundColor=colorArray[filteredSchools.length]
+            }
+
+        }
+        e.target.classList.toggle('active')
+        
+    }
+```
+
+### Return Function 
+
+We will loop over the unique schools with the total number of lessons\
+We will check if this school on the selected school list and add the color with a conditional style rendering 
+
+```javascript
+    return (
+        <div className="slide">
+            <div className='total heading'>
+                <span>{findNumberOfLessons(filteredData)}</span> lessons<div>in {camp}</div>
+
+            </div>
+
+            <div className='sections'>
+                {dataforEchSchool.map((elm, index) =>{
+                    if(filteredSchools.indexOf(elm[0].school) > -1 ){
+                        addOn()
+                        return <div className='total input' key={elm[0].id}>
+                        <div className='input'>
+                        <input 
+                        className=''
+                        type="checkbox" 
+                        value={elm[0].school} 
+                        name="school"
+                        style={{
+                           backgroundColor: color[ count -1],
+
+                        }}
+                        checked={filteredSchools.indexOf(elm[0].school) > -1 }
+                        onChange={(e)=>onChangeHandler(e)}
+                        />
+                        </div>
+                        <div style={{
+                           color: color[ count -1]
+                        }}>
+                        <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
+                        </div>
+                        </div>
+                    } else{
+                        return <div className='total input' key={elm[0].id}>
+                        <div className='input'>
+                        <input 
+                        className=''
+                        type="checkbox" 
+                        value={elm[0].school} 
+                        name="school"
+                        style={{
+                           backgroundColor: 'white',
+
+                        }}
+                        checked={filteredSchools.indexOf(elm[0].school) > -1 }
+                        onChange={(e)=>onChangeHandler(e)}
+                        />
+                        </div>
+                        <div style={{
+                           color: 'gray'
+                        }}>
+                        <span >{findNumberOfLessons(elm)}</span> lessons<div>in {elm[0].school}</div>
+                        </div>
+                        </div>
+                    }
+
+                })}
+            </div>
+
+        
+        </div>
+    )
+    ```
+    
+## Chart Component 
+
+This component will communicate with the store to get the school list with the list of color to add it or remove it from the canvas.
 
 
 
