@@ -109,7 +109,7 @@ export const changeSchool = (school : string): ActionTypes=>{
 export const apiRequest = ()=>{
     return (dispatch: Dispatch<ActionTypes>, getState: AppState)=>{
         dispatch(requestData())
-        return fetch('http://localhost:4000/')
+        return fetch('https://raw.githubusercontent.com/abdelrhman-arnos/analysis-fe-challenge/master/data.json')
         .then(res => res.json())
         .then((data: DataType[]) =>{
             dispatch(receiveData(data))
