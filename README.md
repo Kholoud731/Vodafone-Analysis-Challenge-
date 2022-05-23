@@ -21,6 +21,8 @@ Runs the app in the development mode.
 Runs the app in the development mode.\
 Open [http://localhost:4000](http://localhost:4000) to view the response it the browser to make sure it's working.
 
+***No need to install the backend anymore as I made an api request from a raw github json file***\
+***You could skip the installation of the backend server run the app and it will work totally fine***
 
 ### Front End Setup
 
