@@ -3,23 +3,12 @@
 ## How to run App? 
 
 
-### BackEnd Setup
+### Deployed App
 
+You could find a link for the application 
+Runs the app deployed to test it with no need to install anything 
 
-#### git clone "github repo for backend"
-
-please find the link for the backend to receive the required api to run the front end app.\
-link to backend: [Backend repo link](https://github.com/Kholoud731/Vodafone-Backend) 
-
-#### npm install 
-
-In you backend app run npm install to install all the dependancies needed.\
-Runs the app in the development mode.
-
-#### npm start
-
-Runs the app in the development mode.\
-Open [http://localhost:4000](http://localhost:4000) to view the response it the browser to make sure it's working.
+[link](https://fancy-mooncake-45c9d0.netlify.app/) 
 
 ***No need to install the backend anymore as I made an api request from a raw github json file***\
 ***You could skip the installation of the backend server run the app and it will work totally fine***
