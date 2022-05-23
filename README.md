@@ -6,9 +6,7 @@
 ### Deployed App
 
 You could find a link for the application 
-Runs the app deployed to test it with no need to install anything 
-
-[link](https://fancy-mooncake-45c9d0.netlify.app/) 
+Runs the app deployed to test it with no need to install anything: [link](https://fancy-mooncake-45c9d0.netlify.app/) 
 
 ***No need to install the backend anymore as I made an api request from a raw github json file***\
 ***You could skip the installation of the backend server run the app and it will work totally fine***
