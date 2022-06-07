@@ -129,7 +129,7 @@ export const filterSchools = (school: string, color: string):ActionTypes =>{
         error: '',
         camp: '',
         country: '',
-        school: school,
+        school: '',
         selectedSchool: school,
         lineColor: color
     }
@@ -143,7 +143,7 @@ export const removeSchool = (school: string, color: string):ActionTypes => {
         error: '',
         camp: '',
         country: '',
-        school: school,
+        school: '',
         selectedSchool: school,
         lineColor: color
     }

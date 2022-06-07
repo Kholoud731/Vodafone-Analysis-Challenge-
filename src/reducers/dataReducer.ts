@@ -81,13 +81,14 @@ const dataReducer = (state:StateType = initialState, action:ActionTypes): StateT
             }else{
                 return {...state, selectedSchool: [...state.selectedSchool, action.selectedSchool], lineColor: [...state.lineColor, action.lineColor]}
             } 
-            case REMOVE_SCHOOL: 
-                return {...state, 
+        case REMOVE_SCHOOL: 
+            return {...state, 
                     selectedSchool: state.selectedSchool.filter((elm)=> elm !== action.selectedSchool),
                      lineColor: state.lineColor.filter((elm)=> elm !== action.lineColor)}
             
-            case RESET_SCHOOLS:
-                return {...state, selectedSchool: [""], lineColor:['']}
+        case RESET_SCHOOLS:
+            return {...state, selectedSchool: [""], lineColor:['']}
+            
         default:
             return state
     }
