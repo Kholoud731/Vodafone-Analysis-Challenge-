@@ -42,10 +42,10 @@ const ThemeSwitch = ()=>{
     return (
         <div className='theme'>
         <span className='dark'> Dark Mode </span> 
-     <label htmlFor='switch' className="switch">
-     <input id="switch" type="checkbox" onClick={(e)=>changetheme(e)} ref={switchRef}/>
-     <span className="slider round"></span>
-     </label>
+            <label htmlFor='switch' className="switch">
+            <input id="switch" type="checkbox" onClick={(e)=>changetheme(e)} ref={switchRef}/>
+            <span className="slider round"></span>
+            </label>
      </div>
     )
 }

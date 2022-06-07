@@ -45,9 +45,7 @@ const Slide = ({data, country, camp, school, color, filteredSchools,filterSchool
         return elm.school
     })
 
-    const uniqueSchools: string[] = schools.filter(function (x, i, a) { 
-        return a.indexOf(x) === i; 
-    });
+    const uniqueSchools: string[] = Array.from(new Set(schools))
 
     const dataforEchSchool = uniqueSchools.map(school => {
         return filteredData.filter((elm)=> elm.school === school)

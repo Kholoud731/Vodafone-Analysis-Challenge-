@@ -39,25 +39,19 @@ const MainPage = ({children,data,country,camp, school, changeSchool, changeCamp,
         return elm.country
     })
 
-    const uniqueCountrie: string[] = countries.filter(function (x, i, a) { 
-        return a.indexOf(x) === i; 
-    });
+    const uniqueCountrie: string[] = Array.from(new Set(countries))
 
     const camps : string[] = data.map((elm: DataType) =>{
         return elm.camp
     })
 
-    const uniqueCamp: string[] = camps.filter(function (x, i, a) { 
-        return a.indexOf(x) === i; 
-    });
+    const uniqueCamp: string[] = Array.from(new Set(camps))
 
     const schools : string[] = data.map((elm: DataType) =>{
         return elm.school
     })
 
-    const uniqueSchools: string[] =["Show all" , ...schools.filter(function (x, i, a) { 
-        return a.indexOf(x) === i; 
-    })]
+    const uniqueSchools: string[] =["Show all" , ...Array.from(new Set(schools))]
 
     const onSelectionChange = (e: string, data:string)=>{
         if(data === "Select Country"){
